@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Represent</string>
+    <string name="app_name">Educated Voter</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Educated Voter</string>
+    <string name="prompt">Select Area</string>
+    <string name="submit">Submit</string>
 </resources>

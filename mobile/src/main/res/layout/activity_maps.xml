@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.eviltwin.crunchtime.ConvertActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_wrap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title="@string/app_name"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".65"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:elevation="5dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:background="#000"
+            android:layout_weight=".35">
+
+            <LinearLayout
+                android:id="@+id/zip_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt"
+                    android:textSize="20sp"
+                    android:textColor="#F2F2F2"/>
+
+                <EditText
+                    android:id="@+id/zip_code"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:background="#FAFAFA"
+                    android:textColor="#4F4F4F"
+                    android:hint="94709"
+                    android:inputType="number"/>
+
+                <Button
+                    android:id="@+id/lookup"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="@string/submit"
+                    android:layout_marginTop="3dp"
+                    android:background="#0099CB"
+                    android:textColor="#F2F2F2"
+                    android:onClick="lookupReps"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
