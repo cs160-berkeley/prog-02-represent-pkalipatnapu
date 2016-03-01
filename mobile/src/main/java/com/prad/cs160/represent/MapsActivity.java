@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(sendIntent);
         */
         Intent intent = new Intent(this, Representatives.class);
-        String zip = zipcode.getText().toString();
+        int zip = Integer.parseInt(zipcode.getText().toString());
         intent.putExtra(ZIP_CODE, zip);
         startActivity(intent);
     }
