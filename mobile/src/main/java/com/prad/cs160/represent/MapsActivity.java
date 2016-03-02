@@ -26,8 +26,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText zipcode;
     private Geocoder gcoder;
 
-    public final static String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +48,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int zip = Integer.parseInt(zipcode.getText().toString());
 
         Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-        sendIntent.putExtra(ZIP_CODE, zip);
+        sendIntent.putExtra(PhoneToWatchService.ZIP_CODE, zip);
         startService(sendIntent);
 
         Intent intent = new Intent(this, Representatives.class);
-        intent.putExtra(ZIP_CODE, zip);
+        intent.putExtra(Representatives.ZIP_CODE, zip);
         startActivity(intent);
     }
 

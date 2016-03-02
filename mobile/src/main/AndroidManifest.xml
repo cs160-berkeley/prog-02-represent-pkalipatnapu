@@ -46,7 +46,6 @@
             android:name=".PhoneToWatchService"
             android:exported="false">
         </service>
-        <service android:name=".PhoneToWatchService" />
         <!-- Listeners are special services that need to be declared like below, as BIND_LISTENER -->
         <service android:name=".PhoneListenerService"
             android:label="@string/app_name">

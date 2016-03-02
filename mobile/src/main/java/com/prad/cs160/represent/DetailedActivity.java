@@ -8,14 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DetailedActivity extends AppCompatActivity {
+    public final static String REP_NAME = "com.prad.cs160.represent.REP_NAME";
+    public final static String DEM_PARTY = "com.prad.cs160.represent.DEM_PARTY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
 
         Bundle bundle = getIntent().getExtras();
-        String rep_name = bundle.getString(Representatives.REP_NAME);
-        boolean democrat = bundle.getBoolean(Representatives.DEM_PARTY);
+        String rep_name = bundle.getString(REP_NAME);
+        boolean democrat = bundle.getBoolean(DEM_PARTY);
 
         LinearLayout banner = (LinearLayout) findViewById(R.id.banner);
         ImageView dp = (ImageView) findViewById(R.id.displaypic);

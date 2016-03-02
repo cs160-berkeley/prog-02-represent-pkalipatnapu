@@ -19,11 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Representatives extends AppCompatActivity {
+    public final static String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
+
     LinearLayout congressmen, senators, page;
     Map<Integer, String> rep_name;
-
-    public final static String REP_NAME = "com.prad.cs160.represent.REP_NAME";
-    public final static String DEM_PARTY = "com.prad.cs160.represent.DEM_PARTY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class Representatives extends AppCompatActivity {
         rep_name = new HashMap<Integer, String>();
 
         Bundle bundle = getIntent().getExtras();
-        int zip = bundle.getInt(MapsActivity.ZIP_CODE);
+        int zip = bundle.getInt(ZIP_CODE);
         populateLists(zip);
     }
 
@@ -53,8 +52,8 @@ public class Representatives extends AppCompatActivity {
             int selected_representative = view.getId();
             String name = rep_name.get(selected_representative);
             Intent intent = new Intent(Representatives.this, DetailedActivity.class);
-            intent.putExtra(REP_NAME, name);
-            intent.putExtra(DEM_PARTY, LookupRepresentatives.isDemocrat(name));
+            intent.putExtra(DetailedActivity.REP_NAME, name);
+            intent.putExtra(DetailedActivity.DEM_PARTY, LookupRepresentatives.isDemocrat(name));
             startActivity(intent);
         }
     };

@@ -18,7 +18,7 @@ public class LookupRepresentatives {
         } else {
             // TODO(prad): Fix this idiocy.
             reps.add("Ted Cruz");
-            reps.add("Ted Cruz");
+            reps.add("Jeb Bush");
         }
         return reps;
     }
@@ -32,7 +32,7 @@ public class LookupRepresentatives {
             senators.add("Ted Cruz");
         } else {
             senators.add("Ted Cruz");
-            senators.add("Ted Cruz");
+            senators.add("Jeb Bush");
         }
         return senators;
     }

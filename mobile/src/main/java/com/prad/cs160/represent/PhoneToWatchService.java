@@ -13,6 +13,8 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 public class PhoneToWatchService extends Service {
+    public final static String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
+
     private GoogleApiClient mApiClient;
 
     @Override
@@ -44,7 +46,7 @@ public class PhoneToWatchService extends Service {
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
         Bundle extras = intent.getExtras();
-        final int zipcode = extras.getInt(MapsActivity.ZIP_CODE);
+        final int zipcode = extras.getInt(ZIP_CODE);
 
         // Send the message with the cat name
         new Thread(new Runnable() {
