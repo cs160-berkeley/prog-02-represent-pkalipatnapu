@@ -47,13 +47,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void lookupReps(View view) {
-        /* TODO(prad): send to watch.
-        Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-        sendIntent.putExtra("CAT_NAME", "Fred");
-        startService(sendIntent);
-        */
-        Intent intent = new Intent(this, Representatives.class);
         int zip = Integer.parseInt(zipcode.getText().toString());
+
+        Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
+        sendIntent.putExtra(ZIP_CODE, zip);
+        startService(sendIntent);
+
+        Intent intent = new Intent(this, Representatives.class);
         intent.putExtra(ZIP_CODE, zip);
         startActivity(intent);
     }

@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:text="Your Representatives"
+        android:text="Your Congressmen"
         android:gravity="center"
         android:textColor="#F2F2F2"
         android:textSize="20dp"/>

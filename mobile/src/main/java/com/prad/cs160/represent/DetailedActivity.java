@@ -15,7 +15,7 @@ public class DetailedActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String rep_name = bundle.getString(Representatives.REP_NAME);
-        boolean democrat = bundle.getBoolean(Representatives.PARTY);
+        boolean democrat = bundle.getBoolean(Representatives.DEM_PARTY);
 
         LinearLayout banner = (LinearLayout) findViewById(R.id.banner);
         ImageView dp = (ImageView) findViewById(R.id.displaypic);
