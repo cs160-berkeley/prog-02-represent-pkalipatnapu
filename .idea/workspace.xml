@@ -10,20 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46417b37-bfcb-4052-88ab-bbab787a8254" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apilibrary/src/main/java/com/prad/cs160/apilibrary/LookupResults.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/screenshots/main.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wear/src/main/res/drawable/bernie_sanders.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wear/src/main/res/drawable/jeb_bush.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wear/src/main/res/drawable/ted_cruz.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/ClickableCardFragment.java" afterPath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/ClickableCardFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apilibrary/src/main/java/com/prad/cs160/apilibrary/LookupRepresentatives.java" afterPath="$PROJECT_DIR$/apilibrary/src/main/java/com/prad/cs160/apilibrary/LookupRepresentatives.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/MainActivity.java" afterPath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile/src/main/java/com/prad/cs160/represent/MapsActivity.java" afterPath="$PROJECT_DIR$/mobile/src/main/java/com/prad/cs160/represent/MapsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/Politicians.java" afterPath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/Politicians.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/WatchListenerService.java" afterPath="$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/WatchListenerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/activity_maps.xml" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/activity_maps.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wear/src/main/res/layout/clickable_card_fragment.xml" afterPath="$PROJECT_DIR$/wear/src/main/res/layout/clickable_card_fragment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="prog-02-represent-pkalipatnapu.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -4215,7 +4202,7 @@
     <entry file="file://$PROJECT_DIR$/wear/src/main/java/com/prad/cs160/represent/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
           <folding />
         </state>
       </provider>

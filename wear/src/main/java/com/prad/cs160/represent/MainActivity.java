@@ -29,11 +29,6 @@ public class MainActivity extends WearableActivity {
 
         final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         pager.setAdapter(new Politicians(this, getFragmentManager(), zip));
-
-        /*ShakeDetectorService shake = new ShakeDetectorService();
-        SensorManager sensorManager = (SensorManager) getApplicationContext().getSystemService(SENSOR_SERVICE);
-        Sensor accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(shake, accel, SensorManager.SENSOR_DELAY_NORMAL);*/
     }
 }
 
