@@ -1,9 +1,7 @@
 package com.prad.cs160.represent;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
@@ -27,18 +25,6 @@ public class PhoneListenerService extends WearableListenerService {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
             String name = new String(messageEvent.getData(), StandardCharsets.UTF_8);
 
-            // Make a toast with the String
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, "Opened form watch", duration);
-            toast.show();
-
-            // so you may notice this crashes the phone because it's
-            //''sending message to a Handler on a dead thread''... that's okay. but don't do this.
-            // replace sending a toast with, like, starting a new activity or something.
-            // who said skeleton code is untouchable? #breakCSconceptions
-
             Intent intent = new Intent(this, DetailedActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //you need to add this flag since you're starting a new activity from a service
@@ -49,13 +35,6 @@ public class PhoneListenerService extends WearableListenerService {
         } else if (messageEvent.getPath().equalsIgnoreCase(ZIPCODE) ) {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
             int zip =  Integer.parseInt(new String(messageEvent.getData(), StandardCharsets.UTF_8));
-
-            // Make a toast with the String
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, "Opened form watch", duration);
-            toast.show();
 
             Intent intent = new Intent(this, Representatives.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

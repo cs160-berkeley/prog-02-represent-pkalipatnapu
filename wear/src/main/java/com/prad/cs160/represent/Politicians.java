@@ -50,6 +50,11 @@ public class Politicians extends FragmentGridPagerAdapter {
     public Fragment getFragment(int row, int col) {
         ClickableCardFragment fragment = new ClickableCardFragment();
         fragment.setTitle(representatives.get(col));
+        if (LookupRepresentatives.isDemocrat(representatives.get(col))) {
+            fragment.setIcon(R.drawable.demlogo);
+        }else {
+            fragment.setIcon(R.drawable.replogo);
+        }
         fragment.setOnClickListener(new OnFragmentClick(representatives.get(col)));
         return fragment;
     }

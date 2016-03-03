@@ -39,5 +39,22 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/term"
+            android:textColor="#000000"
+            android:text="@string/term"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/description"
+            android:textColor="#4F4F4F"
+            android:text="@string/description"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
