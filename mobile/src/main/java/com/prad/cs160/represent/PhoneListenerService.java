@@ -16,13 +16,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class PhoneListenerService extends WearableListenerService {
 
-//   WearableListenerServices don't need an iBinder or an onStartCommand: they just need an onMessageReceieved.
-private static final String DETAILED = "/detailed";
+    // WearableListenerServices don't need an iBinder or an onStartCommand: they just need an onMessageReceieved.
+    private static final String DETAILED = "/detailed";
+    private static final String ZIPCODE = "/zipcode";
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         Log.d("T", "in PhoneListenerService, got: " + messageEvent.getPath());
-        if( messageEvent.getPath().equalsIgnoreCase(DETAILED) ) {
+        if (messageEvent.getPath().equalsIgnoreCase(DETAILED) ) {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
             String name = new String(messageEvent.getData(), StandardCharsets.UTF_8);
 
@@ -44,6 +45,23 @@ private static final String DETAILED = "/detailed";
             intent.putExtra(DetailedActivity.REP_NAME, name);
             intent.putExtra(DetailedActivity.DEM_PARTY, LookupRepresentatives.isDemocrat(name));
             Log.d("T", "about to start watch DetailedActivity with name: "+ name);
+            startActivity(intent);
+        } else if (messageEvent.getPath().equalsIgnoreCase(ZIPCODE) ) {
+            // Value contains the String we sent over in WatchToPhoneService, "good job"
+            int zip =  Integer.parseInt(new String(messageEvent.getData(), StandardCharsets.UTF_8));
+
+            // Make a toast with the String
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, "Opened form watch", duration);
+            toast.show();
+
+            Intent intent = new Intent(this, Representatives.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //you need to add this flag since you're starting a new activity from a service
+            intent.putExtra(Representatives.ZIP_CODE, zip);
+            Log.d("T", "about to start watch Representatives with zip: "+ Integer.toString(zip));
             startActivity(intent);
         } else {
             super.onMessageReceived( messageEvent );

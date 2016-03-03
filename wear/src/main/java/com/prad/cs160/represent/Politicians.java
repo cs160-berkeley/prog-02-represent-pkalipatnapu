@@ -38,7 +38,7 @@ public class Politicians extends FragmentGridPagerAdapter {
 
         @Override
         public void onClick(View v) {
-            Intent sendIntent = new Intent(v.getContext(), WatchToPhoneService.class);
+            Intent sendIntent = new Intent(v.getContext().getApplicationContext(), WatchToPhoneService.class);
             sendIntent.putExtra(WatchToPhoneService.REP_NAME, name);
             v.getContext().startService(sendIntent);
         }

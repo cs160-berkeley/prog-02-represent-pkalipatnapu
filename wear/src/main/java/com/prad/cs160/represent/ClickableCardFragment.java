@@ -14,7 +14,6 @@ public class ClickableCardFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        //fragmentView = super.onCreateContentView(inflater, container, savedInstanceState);
         View fragmentView = inflater.inflate(R.layout.clickable_card_fragment, container, false);
         TextView mTitle = (TextView) fragmentView.findViewById(R.id.title);
         mTitle.setText(title);
