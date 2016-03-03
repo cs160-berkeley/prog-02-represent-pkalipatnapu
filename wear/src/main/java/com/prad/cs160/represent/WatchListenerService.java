@@ -24,7 +24,6 @@ public class WatchListenerService extends WearableListenerService {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //you need to add this flag since you're starting a new activity from a service
             intent.putExtra(MainActivity.ZIP_CODE, zipcode);
-            Log.d("T", "about to start watch MainActivity with ZIP: "+ value);
             startActivity(intent);
         } else {
             super.onMessageReceived(messageEvent);

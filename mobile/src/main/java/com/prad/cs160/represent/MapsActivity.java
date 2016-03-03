@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -80,20 +81,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Default to current GPS position.
         // Get away with not checking this.
-        boolean permission = checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, android.os.Process.myPid(), android.os.Process.myUid()) == PackageManager.PERMISSION_GRANTED;
-        mMap.setMyLocationEnabled(true);
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        List<String> providers = locationManager.getProviders(true);
         Location bestLocation = null;
-        for (String provider : providers) {
-            Location l = locationManager.getLastKnownLocation(provider);
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
-                bestLocation = l;
-            }
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, android.os.Process.myPid(), android.os.Process.myUid()) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            bestLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
         }
         // Direct to berkeley by default.
         LatLng latLng = new LatLng(37.87, -122.27);
@@ -125,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             zipcode.setText(addresses.get(0).getPostalCode());
         } catch (Exception e) {
             // Do nothing.
+            Log.d("T", e.toString());
         }
     }
 

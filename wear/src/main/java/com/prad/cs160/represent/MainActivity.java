@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
 import android.support.wearable.view.GridViewPager;
+import android.util.Log;
 import android.widget.TextView;
 
 public class MainActivity extends WearableActivity {
@@ -23,6 +24,8 @@ public class MainActivity extends WearableActivity {
         int zip;
         if (bundle == null) zip = 94704;
         else zip = bundle.getInt(ZIP_CODE);
+
+        Log.d("T", "Watch MainActivity with ZIP: " + zip);
 
         final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         pager.setAdapter(new Politicians(this, getFragmentManager(), zip));

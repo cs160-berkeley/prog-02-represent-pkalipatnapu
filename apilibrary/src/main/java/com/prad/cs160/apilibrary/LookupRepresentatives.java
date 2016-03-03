@@ -11,28 +11,20 @@ import java.util.Map;
 public class LookupRepresentatives {
     public static List<String> getCongressmenForZip(int zip) {
         List<String> reps = new ArrayList<>();
-        // For even zip codes, the representative is Jeb Bush.
-        // Otherwise, the representatives are Hillary Clinton and Marco Rubio.
-        if (zip % 2 == 0) {
-            reps.add("Jeb Bush");
-        } else {
-            // TODO(prad): Fix this idiocy.
-            reps.add("Ted Cruz");
-            reps.add("Jeb Bush");
-        }
+        reps.add("Jeb Bush");
         return reps;
     }
 
     public static List<String> getSenatorsForZip(int zip) {
         List<String> senators = new ArrayList<>();
         // If the zip is an even number, the senators are Bernie Sanders and
-        // Ted Cruz. Otherwise, they are Donald Trump and Joe Biden.
+        // Ted Cruz. Otherwise, they are Hilary Clinton and Marco Rubio.
         if (zip % 2 == 0) {
             senators.add("Bernie Sanders");
             senators.add("Ted Cruz");
         } else {
-            senators.add("Ted Cruz");
-            senators.add("Jeb Bush");
+            senators.add("Hilary Clinton");
+            senators.add("Marco Rubio");
         }
         return senators;
     }
@@ -40,8 +32,10 @@ public class LookupRepresentatives {
     private static final Map<String, Boolean> party_dem = new HashMap<>();
     static {
         party_dem.put("Bernie Sanders", true);
+        party_dem.put("Hilary Clinton", true);
         party_dem.put("Ted Cruz", false);
         party_dem.put("Jeb Bush", false);
+        party_dem.put("Marco Rubio", false);
     }
 
     public static boolean isDemocrat(String name) {

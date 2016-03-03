@@ -65,7 +65,6 @@
                     android:textSize="30sp"
                     android:background="#FAFAFA"
                     android:textColor="#4F4F4F"
-                    android:hint="94709"
                     android:inputType="number"/>
 
                 <Button

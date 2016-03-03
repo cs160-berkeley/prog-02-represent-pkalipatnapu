@@ -9,6 +9,7 @@ import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.view.View;
 
 import com.prad.cs160.apilibrary.LookupRepresentatives;
+import com.prad.cs160.apilibrary.LookupResults;
 
 import java.util.List;
 
@@ -49,23 +50,39 @@ public class Politicians extends FragmentGridPagerAdapter {
     @Override
     public Fragment getFragment(int row, int col) {
         ClickableCardFragment fragment = new ClickableCardFragment();
-        fragment.setTitle(representatives.get(col));
-        if (LookupRepresentatives.isDemocrat(representatives.get(col))) {
-            fragment.setIcon(R.drawable.demlogo);
-        }else {
-            fragment.setIcon(R.drawable.replogo);
+        // Last column gets vote view.
+        if (col == getColumnCount(1)-1) {
+            float dem_percentage = LookupResults.demPresidentialVotePercentage(zip);
+            float rep_percentage = 100 - dem_percentage;
+            fragment.setTitle("2012 Vote");
+            fragment.setDescription("Democrat: " + dem_percentage + "%\n Republican: " + rep_percentage + "%");
+        } else {
+            fragment.setTitle(representatives.get(col));
+            if (LookupRepresentatives.isDemocrat(representatives.get(col))) {
+                fragment.setIcon(R.drawable.demlogo);
+            } else {
+                fragment.setIcon(R.drawable.replogo);
+            }
+            fragment.setOnClickListener(new OnFragmentClick(representatives.get(col)));
         }
-        fragment.setOnClickListener(new OnFragmentClick(representatives.get(col)));
         return fragment;
     }
 
     // Obtain the background image for the specific page
     @Override
     public Drawable getBackgroundForPage(int row, int column) {
-        // Place image at specified position
-        String name = representatives.get(column);
-        int drawable_id = mContext.getResources().getIdentifier(name.replace(' ', '_').toLowerCase(), "drawable", mContext.getPackageName());
-        return mContext.getResources().getDrawable(drawable_id, null);
+        if (column == getColumnCount(1)-1) {
+            float percentage = LookupResults.demPresidentialVotePercentage(zip);
+            // find nearest 10% figure.
+            int nearest_ten = Math.round(percentage / 10);
+            int drawable_id = mContext.getResources().getIdentifier("percentage" + Integer.toString(nearest_ten), "drawable", mContext.getPackageName());
+            return mContext.getResources().getDrawable(drawable_id, null);
+        } else {
+            // Get candidates picture.
+            String name = representatives.get(column);
+            int drawable_id = mContext.getResources().getIdentifier(name.replace(' ', '_').toLowerCase(), "drawable", mContext.getPackageName());
+            return mContext.getResources().getDrawable(drawable_id, null);
+        }
     }
 
     // Obtain the number of pages (vertical)
@@ -77,6 +94,6 @@ public class Politicians extends FragmentGridPagerAdapter {
     // Obtain the number of pages (horizontal)
     @Override
     public int getColumnCount(int rowNum) {
-        return representatives.size();
+        return representatives.size() + 1;
     }
 };

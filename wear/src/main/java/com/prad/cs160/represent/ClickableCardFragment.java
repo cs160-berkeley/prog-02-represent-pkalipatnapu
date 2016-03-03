@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 public class ClickableCardFragment extends Fragment {
     private OnClickListener listener;
-    private String title;
+    private String title, description;
+    private boolean hasIcon = false;
     private int iconRes;
 
     @Override
@@ -20,8 +21,11 @@ public class ClickableCardFragment extends Fragment {
         TextView mTitle = (TextView) fragmentView.findViewById(R.id.title);
         mTitle.setText(title);
 
+        TextView mDescription = (TextView) fragmentView.findViewById(R.id.description);
+        mDescription.setText(description);
+
         ImageView icon = (ImageView) fragmentView.findViewById(R.id.icon);
-        icon.setBackground(fragmentView.getContext().getResources().getDrawable(iconRes, null));
+        if (hasIcon) icon.setBackground(fragmentView.getContext().getResources().getDrawable(iconRes, null));
 
         fragmentView.setOnClickListener(new OnClickListener() {
             @Override
@@ -39,7 +43,9 @@ public class ClickableCardFragment extends Fragment {
         title = t;
     }
 
-    public void setIcon(int i) { iconRes = i;}
+    public void setIcon(int i) { hasIcon = true; iconRes = i;}
+
+    public void setDescription(String d) {description = d;}
 
     public void setOnClickListener(final OnClickListener listener) {
         this.listener = listener;
