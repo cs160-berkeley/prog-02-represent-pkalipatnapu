@@ -2,21 +2,17 @@ package com.prad.cs160.represent;
 
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
-import android.support.wearable.view.BoxInsetLayout;
 import android.support.wearable.view.GridViewPager;
 import android.util.Log;
-import android.widget.TextView;
 
 public class MainActivity extends WearableActivity {
 
     public static final String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
 
-    private BoxInsetLayout mContainerView;
-    private TextView mTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("T", "Watch MainActivity");
         setContentView(R.layout.activity_main);
         setAmbientEnabled();
 
@@ -27,7 +23,7 @@ public class MainActivity extends WearableActivity {
 
         Log.d("T", "Watch MainActivity with ZIP: " + zip);
 
-        final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
+        GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         pager.setAdapter(new Politicians(this, getFragmentManager(), zip));
     }
 }
