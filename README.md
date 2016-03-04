@@ -10,7 +10,7 @@ Pradeep Kalipatnapu ([prad@berkeley.edu](mailto:prad@berkeley.edu))
 
 ## Demo Video
 
-See [your demo video title here] (https://link_to_your_video)
+See [your demo video title here] (https://youtu.be/400igHCw6Gg)
 
 ## UI Mocks
 
@@ -18,4 +18,8 @@ The UI mocks were done on Figma. You can find them [here] (https://www.figma.com
 
 ## Screenshots
 
-<img src="screenshots/main.png" height="400" alt="Screenshot"/>
+<img src="screenshots/main_view.png" height="400" alt="Lancher screen on phone app"/>
+<img src="screenshots/congressional_view.png" height="400" alt="Congressional screen on phone app"/>
+<img src="screenshots/detailed_view.png" height="400" alt="Detailed screen on phone app"/>
+<img src="screenshots/watch_main_view.png" height="200" alt="Lancher screen on watch app"/>
+<img src="screenshots/vote_view.png" height="200" alt="Vote screen on watch app"/>
