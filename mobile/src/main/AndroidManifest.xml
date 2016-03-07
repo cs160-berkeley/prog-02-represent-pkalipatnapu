@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Representatives" />
+        <activity android:name=".CongressionalActivity" />
         <activity android:name=".DetailedActivity" />
 
         <service

@@ -56,13 +56,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void lookupReps(View view) {
         int zip = Integer.parseInt(zipcode.getText().toString());
+        Log.d("T", "Received Zip Code: " + zip);
 
         Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
         sendIntent.putExtra(PhoneToWatchService.ZIP_CODE, zip);
-        startService(sendIntent);
+        //startService(sendIntent);
 
-        Intent intent = new Intent(this, Representatives.class);
-        intent.putExtra(Representatives.ZIP_CODE, zip);
+        Intent intent = new Intent(this, CongressionalActivity.class);
+        intent.putExtra(CongressionalActivity.ZIP_CODE, zip);
         startActivity(intent);
     }
 

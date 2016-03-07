@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sunlight foundation provides information about legislators -->
+    <string name="sunlight" templateMergeStrategy="preserve" translatable="false">
+        1734af05a9544b7a8b6a23ce4edf72e3
+    </string>
+</resources>

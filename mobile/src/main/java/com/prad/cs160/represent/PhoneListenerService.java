@@ -1,13 +1,7 @@
 package com.prad.cs160.represent;
 
-import android.content.Intent;
-import android.util.Log;
-
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
-import com.prad.cs160.apilibrary.LookupRepresentatives;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * Created by joleary and noon on 2/19/16 at very late in the night. (early in the morning?)
@@ -20,6 +14,7 @@ public class PhoneListenerService extends WearableListenerService {
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
+        /*
         Log.d("T", "in PhoneListenerService, got: " + messageEvent.getPath());
         if (messageEvent.getPath().equalsIgnoreCase(DETAILED) ) {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
@@ -29,22 +24,23 @@ public class PhoneListenerService extends WearableListenerService {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //you need to add this flag since you're starting a new activity from a service
             intent.putExtra(DetailedActivity.REP_NAME, name);
-            intent.putExtra(DetailedActivity.DEM_PARTY, LookupRepresentatives.isDemocrat(name));
+            // TODO(prad): Look up party information.
+            intent.putExtra(DetailedActivity.DEM_PARTY, true);
             Log.d("T", "about to start watch DetailedActivity with name: "+ name);
             startActivity(intent);
         } else if (messageEvent.getPath().equalsIgnoreCase(ZIPCODE) ) {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
             int zip =  Integer.parseInt(new String(messageEvent.getData(), StandardCharsets.UTF_8));
 
-            Intent intent = new Intent(this, Representatives.class);
+            Intent intent = new Intent(this, CongressionalActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //you need to add this flag since you're starting a new activity from a service
-            intent.putExtra(Representatives.ZIP_CODE, zip);
-            Log.d("T", "about to start watch Representatives with zip: "+ Integer.toString(zip));
+            intent.putExtra(CongressionalActivity.ZIP_CODE, zip);
+            Log.d("T", "about to start watch CongressionalActivity with zip: "+ Integer.toString(zip));
             startActivity(intent);
         } else {
             super.onMessageReceived( messageEvent );
         }
-
+        */
     }
 }
