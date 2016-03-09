@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 public class LookupRepresentatives {
     private static String sunlight_API_KEY = "1734af05a9544b7a8b6a23ce4edf72e3";
-    List<Representative> representatives;
+    Representatives representatives;
 
     // Lookup the list of representatives.
     private class URLTask extends AsyncTask<String, Void, JSONArray> {
@@ -64,7 +64,7 @@ public class LookupRepresentatives {
     }
 
     // Convert JSONArray to List<Representative>
-    private List<Representative> convertJsontoRepresentative(JSONArray legislators) throws JSONException {
+    private Representatives convertJsontoRepresentatives(JSONArray legislators) throws JSONException {
         List<Representative> result = new ArrayList<Representative>();
         for (int i=0; i< legislators.length(); i++) {
             JSONObject legislator_json = legislators.getJSONObject(i);
@@ -80,7 +80,7 @@ public class LookupRepresentatives {
             // TODO(prad): Get bills and committees.
             result.add(legislator_obj);
         }
-        return result;
+        return new Representatives(result);
     }
 
 
@@ -89,12 +89,12 @@ public class LookupRepresentatives {
         URLTask rep_task = new URLTask();
         rep_task.execute(url);
         try {
-            representatives = convertJsontoRepresentative(rep_task.get());
+            representatives = convertJsontoRepresentatives(rep_task.get());
         } catch (Exception e) {
             Log.d("T", "Exception with Async Task. " + e.toString());
         }
         // Lookup bills and committees.
-        for (Representative r : representatives) {
+        for (Representative r : representatives.getList()) {
             url = "http://congress.api.sunlightfoundation.com/committees?member_ids=" + r.bioguide_id + "&apikey=" + sunlight_API_KEY;
             URLTask committee_task = new URLTask();
             committee_task.execute(url);
@@ -157,23 +157,7 @@ public class LookupRepresentatives {
         return term_end;
     }
 
-    public  List<Representative> getCongressmen() {
-        List<Representative> congressmen = new ArrayList<>();
-        for (Representative r : representatives) {
-            if (!r.is_senator) {
-                congressmen.add(r);
-            }
-        }
-        return congressmen;
-    }
-
-    public List<Representative> getSenators() {
-        List<Representative> senators = new ArrayList<>();
-        for (Representative r : representatives) {
-            if (r.is_senator) {
-                senators.add(r);
-            }
-        }
-        return senators;
+    public Representatives getRepresentatives() {
+        return  representatives;
     }
 }

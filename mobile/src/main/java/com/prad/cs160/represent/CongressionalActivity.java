@@ -14,18 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.prad.cs160.apilibrary.LookupRepresentatives;
 import com.prad.cs160.apilibrary.Representative;
+import com.prad.cs160.apilibrary.Representatives;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CongressionalActivity extends AppCompatActivity {
-    public final static String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
+    public final static String REPS = "com.prad.cs160.represent.REPS";
 
     LinearLayout congressmen, senators, page;
     Map<Integer, Representative> rep_names;
-    LookupRepresentatives lr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +38,14 @@ public class CongressionalActivity extends AppCompatActivity {
         rep_names = new HashMap<Integer, Representative>();
 
         Bundle bundle = getIntent().getExtras();
-        int zip = bundle.getInt(ZIP_CODE);
-        lr = new LookupRepresentatives(zip);
-        populateLists(zip);
+        Representatives reps = (Representatives) bundle.getSerializable(REPS);
+        populateLists(reps);
     }
 
 
-    private void populateLists(int zip) {
-        for (Representative c : lr.getCongressmen()) congressmen.addView(createBanner(c));
-        for (Representative s : lr.getSenators()) senators.addView(createBanner(s));
+    private void populateLists(Representatives reps) {
+        for (Representative c : reps.getCongressmen()) congressmen.addView(createBanner(c));
+        for (Representative s : reps.getSenators()) senators.addView(createBanner(s));
     }
 
     View.OnClickListener imgButtonHandler = new View.OnClickListener() {

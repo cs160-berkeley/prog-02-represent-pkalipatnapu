@@ -5,9 +5,11 @@ import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.GridViewPager;
 import android.util.Log;
 
+import com.prad.cs160.apilibrary.Representatives;
+
 public class MainActivity extends WearableActivity {
 
-    public static final String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
+    public static final String REP_LIST = "com.prad.cs160.represent.REP_LIST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +19,13 @@ public class MainActivity extends WearableActivity {
         setAmbientEnabled();
 
         Bundle bundle = getIntent().getExtras();
-        int zip;
-        if (bundle == null) zip = 94704;
-        else zip = bundle.getInt(ZIP_CODE);
+        if (bundle == null) finish();
+        Representatives reps = (Representatives) bundle.getSerializable(REP_LIST);
 
-        Log.d("T", "Watch MainActivity with ZIP: " + zip);
+        Log.d("T", "Watch MainActivity");
 
         GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
-        pager.setAdapter(new Politicians(this, getFragmentManager(), zip));
+        pager.setAdapter(new Politicians(this, getFragmentManager(), reps));
     }
 }
 

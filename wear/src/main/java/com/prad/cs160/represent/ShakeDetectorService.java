@@ -59,8 +59,9 @@ public class ShakeDetectorService extends Service implements SensorEventListener
             // Start Main Activity using the same zip.
             Intent intent = new Intent(this.getBaseContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(MainActivity.ZIP_CODE, zip);
-            startActivity(intent);
+            // TODO(prad): Fix shake detection.
+            //intent.putExtra(MainActivity.ZIP_CODE, zip);
+            //startActivity(intent);
         }
     }
 

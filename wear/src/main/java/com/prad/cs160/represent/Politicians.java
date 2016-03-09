@@ -3,13 +3,13 @@ package com.prad.cs160.represent;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.view.View;
 
-import com.prad.cs160.apilibrary.LookupRepresentatives;
 import com.prad.cs160.apilibrary.LookupResults;
+import com.prad.cs160.apilibrary.Representative;
+import com.prad.cs160.apilibrary.Representatives;
 
 import java.util.List;
 
@@ -17,31 +17,29 @@ public class Politicians extends FragmentGridPagerAdapter {
 
     private Context mContext;
     private List mRows;
-    private int zip;
-    List<String> representatives;
+    List<Representative> rep_list;
 
 
-    public Politicians(Context ctx, FragmentManager fm, int zip) {
+    public Politicians(Context ctx, FragmentManager fm, Representatives reps) {
         super(fm);
         mContext = ctx;
-        this.zip = zip;
 
-        representatives = LookupRepresentatives.getSenatorsForZip(zip);
-        representatives.addAll(LookupRepresentatives.getCongressmenForZip(zip));
+        rep_list = reps.getList();
     }
 
     private class OnFragmentClick implements View.OnClickListener {
-        private String name;
+        private Representative rep;
 
-        OnFragmentClick(String name) {
-            this.name = name;
+        OnFragmentClick(Representative rep) {
+            this.rep = rep;
         }
 
         @Override
         public void onClick(View v) {
-            Intent sendIntent = new Intent(v.getContext().getApplicationContext(), WatchToPhoneService.class);
-            sendIntent.putExtra(WatchToPhoneService.REP_NAME, name);
-            v.getContext().startService(sendIntent);
+            // TODO(prad): Fix this.
+            //Intent sendIntent = new Intent(v.getContext().getApplicationContext(), WatchToPhoneService.class);
+            //sendIntent.putExtra(WatchToPhoneService.REP_NAME, name);
+            //v.getContext().startService(sendIntent);
         }
     };
 
@@ -52,18 +50,19 @@ public class Politicians extends FragmentGridPagerAdapter {
         ClickableCardFragment fragment = new ClickableCardFragment();
         // Last column gets vote view.
         if (col == getColumnCount(1)-1) {
-            float dem_percentage = LookupResults.demPresidentialVotePercentage(zip);
+            // TODO(prad): Fix fake result.
+            float dem_percentage = LookupResults.demPresidentialVotePercentage(94047);
             float rep_percentage = 100 - dem_percentage;
             fragment.setTitle("2012 Vote");
             fragment.setDescription("Democrat: " + dem_percentage + "%\n Republican: " + rep_percentage + "%");
         } else {
-            fragment.setTitle(representatives.get(col));
-            if (LookupRepresentatives.isDemocrat(representatives.get(col))) {
+            fragment.setTitle(rep_list.get(col).name);
+            if (rep_list.get(col).is_democrat) {
                 fragment.setIcon(R.drawable.demlogo);
             } else {
                 fragment.setIcon(R.drawable.replogo);
             }
-            fragment.setOnClickListener(new OnFragmentClick(representatives.get(col)));
+            fragment.setOnClickListener(new OnFragmentClick(rep_list.get(col)));
         }
         return fragment;
     }
@@ -72,15 +71,17 @@ public class Politicians extends FragmentGridPagerAdapter {
     @Override
     public Drawable getBackgroundForPage(int row, int column) {
         if (column == getColumnCount(1)-1) {
-            float percentage = LookupResults.demPresidentialVotePercentage(zip);
+            // TODO(prad): Still using fake results.
+            float percentage = LookupResults.demPresidentialVotePercentage(94047);
             // find nearest 10% figure.
             int nearest_ten = Math.round(percentage / 10);
             int drawable_id = mContext.getResources().getIdentifier("percentage" + Integer.toString(nearest_ten), "drawable", mContext.getPackageName());
             return mContext.getResources().getDrawable(drawable_id, null);
         } else {
             // Get candidates picture.
-            String name = representatives.get(column);
-            int drawable_id = mContext.getResources().getIdentifier(name.replace(' ', '_').toLowerCase(), "drawable", mContext.getPackageName());
+            // TODO(prad): Add appropriate picture.
+            String name = rep_list.get(column).name;
+            int drawable_id = mContext.getResources().getIdentifier("hilary_clinton", "drawable", mContext.getPackageName());
             return mContext.getResources().getDrawable(drawable_id, null);
         }
     }
@@ -94,6 +95,6 @@ public class Politicians extends FragmentGridPagerAdapter {
     // Obtain the number of pages (horizontal)
     @Override
     public int getColumnCount(int rowNum) {
-        return representatives.size() + 1;
+        return rep_list.size() + 1;
     }
 };

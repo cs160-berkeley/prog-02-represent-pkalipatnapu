@@ -24,6 +24,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.prad.cs160.apilibrary.LookupRepresentatives;
+import com.prad.cs160.apilibrary.Representatives;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private EditText zipcode;
     private Geocoder gcoder;
+    LookupRepresentatives lr;
 
     int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
@@ -57,13 +60,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void lookupReps(View view) {
         int zip = Integer.parseInt(zipcode.getText().toString());
         Log.d("T", "Received Zip Code: " + zip);
+        lr = new LookupRepresentatives(zip);
+
+        Representatives reps = lr.getRepresentatives();
 
         Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-        sendIntent.putExtra(PhoneToWatchService.ZIP_CODE, zip);
-        //startService(sendIntent);
+        sendIntent.putExtra(PhoneToWatchService.REPS, reps);
+        startService(sendIntent);
 
         Intent intent = new Intent(this, CongressionalActivity.class);
-        intent.putExtra(CongressionalActivity.ZIP_CODE, zip);
+        intent.putExtra(CongressionalActivity.REPS, reps);
         startActivity(intent);
     }
 
