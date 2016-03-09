@@ -52,16 +52,9 @@ public class ShakeDetectorService extends Service implements SensorEventListener
             // Send message to phone with the zip code.
             Intent sendIntent = new Intent(this.getBaseContext(), WatchToPhoneService.class);
             Random r = new Random();
-            int zip = r.nextInt(49999)*2; // TODO(prad): Delete this. Using only even zip for demo.
+            int zip = r.nextInt(99999);
             sendIntent.putExtra(WatchToPhoneService.ZIP_CODE, zip);
             startService(sendIntent);
-
-            // Start Main Activity using the same zip.
-            Intent intent = new Intent(this.getBaseContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // TODO(prad): Fix shake detection.
-            //intent.putExtra(MainActivity.ZIP_CODE, zip);
-            //startActivity(intent);
         }
     }
 

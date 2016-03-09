@@ -11,11 +11,11 @@ import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
-import com.prad.cs160.apilibrary.Representatives;
+import com.prad.cs160.apilibrary.ElectionInformation;
 
 
 public class PhoneToWatchService extends Service {
-    public final static String REPS = "com.prad.cs160.represent.REPS";
+    public final static String INFO = "com.prad.cs160.represent.INFO";
 
     private GoogleApiClient mApiClient;
 
@@ -48,7 +48,7 @@ public class PhoneToWatchService extends Service {
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
         Bundle extras = intent.getExtras();
-        final Representatives reps = (Representatives) extras.getSerializable(REPS);
+        final ElectionInformation info = (ElectionInformation) extras.getSerializable(INFO);
 
         // Send the message with the cat name
         new Thread(new Runnable() {
@@ -57,7 +57,7 @@ public class PhoneToWatchService extends Service {
                 //first, connect to the apiclient
                 mApiClient.connect();
                 //now that you're connected, send a massage with the cat name
-                sendMessage("/REP_LIST", reps);
+                sendMessage("/INFO", info);
             }
         }).start();
 
@@ -69,7 +69,7 @@ public class PhoneToWatchService extends Service {
         return null;
     }
 
-    private void sendMessage( final String path, final Representatives reps) {
+    private void sendMessage( final String path, final ElectionInformation reps) {
         //one way to send message: start a new thread and call .await()
         //see watchtophoneservice for another way to send a message
         new Thread( new Runnable() {
@@ -77,11 +77,11 @@ public class PhoneToWatchService extends Service {
             public void run() {
                 NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(mApiClient).await();
                 for(Node node : nodes.getNodes()) {
-                    Log.d("T", "Sending message to watch with");
+                    Log.d("T", "Sending message to watch with rep list: " + reps.getString());
                     //we find 'nodes', which are nearby bluetooth devices (aka emulators)
                     //send a message for each of these nodes (just one, for an emulator)
                     MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
-                            mApiClient, node.getId(), path, Representatives.serialize(reps)).await();
+                            mApiClient, node.getId(), path, ElectionInformation.serialize(reps)).await();
                     //4 arguments: api client, the node ID, the path (for the listener to parse),
                     //and the message itself (you need to convert it to bytes.)
                 }

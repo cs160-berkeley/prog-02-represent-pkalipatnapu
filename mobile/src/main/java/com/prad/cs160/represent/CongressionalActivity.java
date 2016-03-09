@@ -14,14 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.prad.cs160.apilibrary.ElectionInformation;
 import com.prad.cs160.apilibrary.Representative;
-import com.prad.cs160.apilibrary.Representatives;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CongressionalActivity extends AppCompatActivity {
-    public final static String REPS = "com.prad.cs160.represent.REPS";
+    public final static String INFO = "com.prad.cs160.represent.INFO";
 
     LinearLayout congressmen, senators, page;
     Map<Integer, Representative> rep_names;
@@ -38,14 +38,14 @@ public class CongressionalActivity extends AppCompatActivity {
         rep_names = new HashMap<Integer, Representative>();
 
         Bundle bundle = getIntent().getExtras();
-        Representatives reps = (Representatives) bundle.getSerializable(REPS);
-        populateLists(reps);
+        ElectionInformation info = (ElectionInformation) bundle.getSerializable(INFO);
+        populateLists(info);
     }
 
 
-    private void populateLists(Representatives reps) {
-        for (Representative c : reps.getCongressmen()) congressmen.addView(createBanner(c));
-        for (Representative s : reps.getSenators()) senators.addView(createBanner(s));
+    private void populateLists(ElectionInformation info) {
+        for (Representative c : info.getCongressmen()) congressmen.addView(createBanner(c));
+        for (Representative s : info.getSenators()) senators.addView(createBanner(s));
     }
 
     View.OnClickListener imgButtonHandler = new View.OnClickListener() {

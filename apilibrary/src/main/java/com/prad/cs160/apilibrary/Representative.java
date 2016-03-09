@@ -1,5 +1,7 @@
 package com.prad.cs160.apilibrary;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,4 +20,12 @@ public class Representative implements Serializable {
     public String website;
     public String twitter_handle;
     public Date term_end;
+
+    public static byte[] serialize(Representative rep) {
+        return SerializationUtils.serialize(rep);
+    }
+
+    public static Representative deserialize(byte[] rep_array) {
+        return (Representative) SerializationUtils.deserialize(rep_array);
+    }
 }

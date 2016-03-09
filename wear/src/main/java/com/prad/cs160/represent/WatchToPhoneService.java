@@ -10,12 +10,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
+import com.prad.cs160.apilibrary.Representative;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WatchToPhoneService extends Service {
-    public final static String REP_NAME = "com.prad.cs160.represent.REP_NAME";
+    public final static String REP_OBJECT = "com.prad.cs160.represent.REP_OBJECT";
     public final static String ZIP_CODE = "com.prad.cs160.represent.ZIP_CODE";
 
     private GoogleApiClient mApiClient;
@@ -60,10 +61,10 @@ public class WatchToPhoneService extends Service {
                 if (nodes.size() == 0) {
                     return;
                 }
-                if (extras.containsKey(REP_NAME)) {
+                if (extras.containsKey(REP_OBJECT)) {
                     //now that you're connected, send a massage.
-                    final String rep_name = extras.getString(REP_NAME);
-                    sendMessage("/detailed", rep_name);
+                    final Representative rep = (Representative) extras.getSerializable(REP_OBJECT);
+                    sendMessage("/detailed", rep);
                 }
                 if (extras.containsKey(ZIP_CODE)) {
                     //now that you're connected, send a massage.
@@ -81,6 +82,18 @@ public class WatchToPhoneService extends Service {
         return null;
     }
 
+    private void sendMessage( final String path, final Representative rep) {
+        for (Node node : nodes) {
+            Log.d("T", "Sending message to phone with path: " + path + " and rep: " + rep.name);
+            //we find 'nodes', which are nearby bluetooth devices (aka emulators)
+            //send a message for each of these nodes (just one, for an emulator)
+            MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
+                    mApiClient, node.getId(), path, Representative.serialize(rep)).await();
+            //4 arguments: api client, the node ID, the path (for the listener to parse),
+            //and the message itself (you need to convert it to bytes.)
+        }
+    }
+
     private void sendMessage( final String path, final String text) {
         for(Node node : nodes) {
             Log.d("T", "Sending message to phone with path: " + path + " and text: " + text);
@@ -91,23 +104,5 @@ public class WatchToPhoneService extends Service {
             //4 arguments: api client, the node ID, the path (for the listener to parse),
             //and the message itself (you need to convert it to bytes.)
         }
-    /*
-        new Thread( new Runnable() {
-            @Override
-            public void run() {
-                Log.d("T", "Sending message to unknown nodes with text: " + text);
-                NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes( mApiClient ).await();
-                Log.d("T", "Found phones: " + nodes.getNodes().size());
-                for(Node node : nodes.getNodes()) {
-                    Log.d("T", "Sending message to phone with text: " + text);
-                    //we find 'nodes', which are nearby bluetooth devices (aka emulators)
-                    //send a message for each of these nodes (just one, for an emulator)
-                    MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
-                            mApiClient, node.getId(), path, text.getBytes() ).await();
-                    //4 arguments: api client, the node ID, the path (for the listener to parse),
-                    //and the message itself (you need to convert it to bytes.)
-                }
-            }
-        }).start();*/
     }
 }

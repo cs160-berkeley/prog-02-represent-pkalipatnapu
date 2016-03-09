@@ -3,13 +3,13 @@ package com.prad.cs160.represent;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.view.View;
 
-import com.prad.cs160.apilibrary.LookupResults;
+import com.prad.cs160.apilibrary.ElectionInformation;
 import com.prad.cs160.apilibrary.Representative;
-import com.prad.cs160.apilibrary.Representatives;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ public class Politicians extends FragmentGridPagerAdapter {
     List<Representative> rep_list;
 
 
-    public Politicians(Context ctx, FragmentManager fm, Representatives reps) {
+    public Politicians(Context ctx, FragmentManager fm, ElectionInformation reps) {
         super(fm);
         mContext = ctx;
 
-        rep_list = reps.getList();
+        rep_list = reps.getRepresentatives();
     }
 
     private class OnFragmentClick implements View.OnClickListener {
@@ -36,10 +36,9 @@ public class Politicians extends FragmentGridPagerAdapter {
 
         @Override
         public void onClick(View v) {
-            // TODO(prad): Fix this.
-            //Intent sendIntent = new Intent(v.getContext().getApplicationContext(), WatchToPhoneService.class);
-            //sendIntent.putExtra(WatchToPhoneService.REP_NAME, name);
-            //v.getContext().startService(sendIntent);
+            Intent sendIntent = new Intent(v.getContext().getApplicationContext(), WatchToPhoneService.class);
+            sendIntent.putExtra(WatchToPhoneService.REP_OBJECT, rep);
+            v.getContext().startService(sendIntent);
         }
     };
 
@@ -51,7 +50,7 @@ public class Politicians extends FragmentGridPagerAdapter {
         // Last column gets vote view.
         if (col == getColumnCount(1)-1) {
             // TODO(prad): Fix fake result.
-            float dem_percentage = LookupResults.demPresidentialVotePercentage(94047);
+            float dem_percentage = 20;
             float rep_percentage = 100 - dem_percentage;
             fragment.setTitle("2012 Vote");
             fragment.setDescription("Democrat: " + dem_percentage + "%\n Republican: " + rep_percentage + "%");
@@ -72,7 +71,7 @@ public class Politicians extends FragmentGridPagerAdapter {
     public Drawable getBackgroundForPage(int row, int column) {
         if (column == getColumnCount(1)-1) {
             // TODO(prad): Still using fake results.
-            float percentage = LookupResults.demPresidentialVotePercentage(94047);
+            float percentage = 20;
             // find nearest 10% figure.
             int nearest_ten = Math.round(percentage / 10);
             int drawable_id = mContext.getResources().getIdentifier("percentage" + Integer.toString(nearest_ten), "drawable", mContext.getPackageName());
