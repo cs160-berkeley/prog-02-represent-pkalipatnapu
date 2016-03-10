@@ -8,6 +8,9 @@ import com.google.android.gms.wearable.WearableListenerService;
 import com.prad.cs160.apilibrary.ElectionInformation;
 import com.prad.cs160.apilibrary.LookupElectionInformation;
 import com.prad.cs160.apilibrary.Representative;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -39,19 +42,28 @@ public class PhoneListenerService extends WearableListenerService {
             // Lookup information for this Zip code
             LookupElectionInformation lei = new LookupElectionInformation(zip, getBaseContext());
 
-            ElectionInformation reps = lei.getInfo();
+            lei.getInfo(new Callback<ElectionInformation>() {
+                @Override
+                public void success(Result<ElectionInformation> result) {
+                    ElectionInformation info = result.data;
+                    // Load representatives on watch and phone.
+                    Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
+                    sendIntent.putExtra(PhoneToWatchService.INFO, info);
+                    startService(sendIntent);
 
-            // Load representatives on watch and phone.
-            Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-            sendIntent.putExtra(PhoneToWatchService.INFO, reps);
-            startService(sendIntent);
+                    Intent intent = new Intent(getBaseContext(), CongressionalActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //you need to add this flag since you're starting a new activity from a service
+                    intent.putExtra(CongressionalActivity.INFO, info);
+                    Log.d("T", "about to start watch CongressionalActivity with rep list: " + info.getString());
+                    startActivity(intent);
+                }
 
-            Intent intent = new Intent(this, CongressionalActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //you need to add this flag since you're starting a new activity from a service
-            intent.putExtra(CongressionalActivity.INFO, reps);
-            Log.d("T", "about to start watch CongressionalActivity with rep list: "+ reps.getString());
-            startActivity(intent);
+                @Override
+                public void failure(TwitterException e) {
+                    Log.d("T", "Error looking up election information.");
+                }
+            });
         } else {
             super.onMessageReceived(messageEvent);
         }

@@ -26,6 +26,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.prad.cs160.apilibrary.LookupElectionInformation;
 import com.prad.cs160.apilibrary.ElectionInformation;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
 
 import java.util.List;
 import java.util.Locale;
@@ -64,15 +67,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("T", "Received Zip Code: " + zip);
         lei = new LookupElectionInformation(zip, getBaseContext());
 
-        ElectionInformation info = lei.getInfo();
+        lei.getInfo(new Callback<ElectionInformation>() {
+            @Override
+            public void success(Result<ElectionInformation> result) {
+                ElectionInformation info = result.data;
 
-        Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-        sendIntent.putExtra(PhoneToWatchService.INFO, info);
-        startService(sendIntent);
+                Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
+                sendIntent.putExtra(PhoneToWatchService.INFO, info);
+                startService(sendIntent);
 
-        Intent intent = new Intent(this, CongressionalActivity.class);
-        intent.putExtra(CongressionalActivity.INFO, info);
-        startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), CongressionalActivity.class);
+                intent.putExtra(CongressionalActivity.INFO, info);
+                startActivity(intent);
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                Log.d("T", "Error looking up election information.");
+                finish();
+            }
+        });
     }
 
     /**

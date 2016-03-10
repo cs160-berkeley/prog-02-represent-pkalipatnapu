@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.view.View;
@@ -78,10 +79,7 @@ public class Politicians extends FragmentGridPagerAdapter {
             return mContext.getResources().getDrawable(drawable_id, null);
         } else {
             // Get candidates picture.
-            // TODO(prad): Add appropriate picture.
-            String name = rep_list.get(column).name;
-            int drawable_id = mContext.getResources().getIdentifier("hilary_clinton", "drawable", mContext.getPackageName());
-            return mContext.getResources().getDrawable(drawable_id, null);
+            return new BitmapDrawable(rep_list.get(column).profile_picture.getBitmap());
         }
     }
 

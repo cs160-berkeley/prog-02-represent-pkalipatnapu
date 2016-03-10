@@ -84,8 +84,7 @@ public class CongressionalActivity extends AppCompatActivity {
         ImageView iv = new ImageView(this);
         iv.setPadding(20, 0, 20, 0);
         RelativeLayout.LayoutParams rp = new RelativeLayout.LayoutParams(200, 200);
-        // TODO(prad): Fix this
-        iv.setImageResource(this.getResources().getIdentifier("hilary_clinton", "drawable", getPackageName()));
+        iv.setImageBitmap(rep.profile_picture.getBitmap());
         rp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         iv.setLayoutParams(rp);
         rep_banner.addView(iv);

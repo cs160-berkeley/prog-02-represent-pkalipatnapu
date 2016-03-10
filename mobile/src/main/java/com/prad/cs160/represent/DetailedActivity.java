@@ -38,8 +38,7 @@ public class DetailedActivity extends AppCompatActivity {
         else banner.setBackgroundColor(Color.parseColor("#ED2F2F"));
 
         // Set Image
-        // TODO(prad): Fix this
-        dp.setImageResource(this.getResources().getIdentifier("hilary_clinton", "drawable", getPackageName()));
+        dp.setImageBitmap(rep.profile_picture.getBitmap());
 
         // Set rep name
         name.setText(rep.name);

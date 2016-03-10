@@ -21,6 +21,10 @@ public class Representative implements Serializable {
     public String twitter_handle;
     public Date term_end;
 
+    // Gson object. Decode using: final Tweet tweet = gson.fromJson(latest_tweet, Tweet.class);
+    public String latest_tweet;
+    public SerializableBitmap profile_picture;
+
     public static byte[] serialize(Representative rep) {
         return SerializationUtils.serialize(rep);
     }
