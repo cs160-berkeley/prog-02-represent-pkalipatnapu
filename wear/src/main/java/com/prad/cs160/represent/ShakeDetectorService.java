@@ -2,12 +2,17 @@ package com.prad.cs160.represent;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.util.Log;
 
+import org.json.JSONArray;
+
+import java.io.InputStream;
 import java.util.Random;
 
 public class ShakeDetectorService extends Service implements SensorEventListener {
@@ -49,12 +54,27 @@ public class ShakeDetectorService extends Service implements SensorEventListener
         // This method will be called when the accelerometer detects a change.
         // Check if event qualifies, if it does do the actions.
     	if (eventQualifies(event)) {
-            // Send message to phone with the zip code.
-            Intent sendIntent = new Intent(this.getBaseContext(), WatchToPhoneService.class);
-            Random r = new Random();
-            int zip = r.nextInt(99999);
-            sendIntent.putExtra(WatchToPhoneService.ZIP_CODE, zip);
-            startService(sendIntent);
+            try {
+                // Now look up the data from a JSON file.
+                AssetManager mngr = getAssets();
+                InputStream stream = mngr.open("election-county-2012.json");
+                int size = stream.available();
+                byte[] buffer = new byte[size];
+                stream.read(buffer);
+                stream.close();
+                String jsonString = new String(buffer, "UTF-8");
+                JSONArray votes = new JSONArray(jsonString);
+
+                Random r = new Random();
+                int zip_id = r.nextInt(votes.length());
+                int zip = votes.getJSONObject(zip_id).getInt("Postal Code");
+                // Send message to phone with a random zip code.
+                Intent sendIntent = new Intent(this.getBaseContext(), WatchToPhoneService.class);
+                sendIntent.putExtra(WatchToPhoneService.ZIP_CODE, zip);
+                startService(sendIntent);
+            } catch (Exception e) {
+                Log.d("T", "Exception trying to get random zip code: " + e.toString());
+            }
         }
     }
 

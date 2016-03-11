@@ -1,7 +1,13 @@
 package com.prad.cs160.apilibrary;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,10 +23,6 @@ import java.net.URL;
  */
 public class SerializableBitmap implements Serializable {
     private Bitmap bitmap;
-
-    public SerializableBitmap(Bitmap b) {
-        bitmap = b;
-    }
 
     public SerializableBitmap(URL url) {
         class BitmapURLTask extends AsyncTask<URL, Void, Bitmap> {
@@ -41,6 +43,26 @@ public class SerializableBitmap implements Serializable {
         } catch (Exception e) {
             Log.d("T", "Exception fetching image: " + e.toString());
         }
+        bitmap = getCircularBitmap(bitmap);
+    }
+    // TODO(prad): Acknowledge: http://stackoverflow.com/questions/11932805/cropping-circular-area-from-bitmap-in-android
+    public Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
     }
 
     // Converts the Bitmap into a byte array for serialization

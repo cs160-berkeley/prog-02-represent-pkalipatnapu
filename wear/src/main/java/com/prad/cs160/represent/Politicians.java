@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.wearable.view.FragmentGridPagerAdapter;
@@ -11,6 +13,7 @@ import android.view.View;
 
 import com.prad.cs160.apilibrary.ElectionInformation;
 import com.prad.cs160.apilibrary.Representative;
+import com.prad.cs160.apilibrary.VoteResult;
 
 import java.util.List;
 
@@ -19,13 +22,14 @@ public class Politicians extends FragmentGridPagerAdapter {
     private Context mContext;
     private List mRows;
     List<Representative> rep_list;
+    VoteResult vote;
 
 
     public Politicians(Context ctx, FragmentManager fm, ElectionInformation reps) {
         super(fm);
         mContext = ctx;
-
         rep_list = reps.getRepresentatives();
+        vote = reps.previous_election;
     }
 
     private class OnFragmentClick implements View.OnClickListener {
@@ -50,11 +54,11 @@ public class Politicians extends FragmentGridPagerAdapter {
         ClickableCardFragment fragment = new ClickableCardFragment();
         // Last column gets vote view.
         if (col == getColumnCount(1)-1) {
-            // TODO(prad): Fix fake result.
-            float dem_percentage = 20;
-            float rep_percentage = 100 - dem_percentage;
+
+            double dem_percentage = vote.obama_percentage;
+            double rep_percentage = vote.romney_percentage;
             fragment.setTitle("2012 Vote");
-            fragment.setDescription("Democrat: " + dem_percentage + "%\n Republican: " + rep_percentage + "%");
+            fragment.setDescription("\tDemocrat: " + dem_percentage + "%\n\tRepublican: " + rep_percentage + "%");
         } else {
             fragment.setTitle(rep_list.get(col).name);
             if (rep_list.get(col).is_democrat) {
@@ -71,12 +75,22 @@ public class Politicians extends FragmentGridPagerAdapter {
     @Override
     public Drawable getBackgroundForPage(int row, int column) {
         if (column == getColumnCount(1)-1) {
-            // TODO(prad): Still using fake results.
-            float percentage = 20;
-            // find nearest 10% figure.
-            int nearest_ten = Math.round(percentage / 10);
-            int drawable_id = mContext.getResources().getIdentifier("percentage" + Integer.toString(nearest_ten), "drawable", mContext.getPackageName());
-            return mContext.getResources().getDrawable(drawable_id, null);
+            int bg_size = 100;
+            // TODO(prad): Some of these pixels seem to be outside the screen.
+            int[] color = new int[bg_size*bg_size];
+            for (int i=0; i<bg_size; i++) {
+                for (int j=0; j<bg_size; j++) {
+                    if (j<vote.obama_percentage) {
+                        color[i*bg_size + j] = Color.BLUE;
+                    } else if(j<vote.obama_percentage+vote.romney_percentage) {
+                        color[i*bg_size + j] = Color.RED;
+                    } else {
+                        color[i*bg_size + j] = Color.GRAY;
+                    }
+                }
+            }
+            Bitmap bg = Bitmap.createBitmap(color, bg_size, bg_size, Bitmap.Config.RGB_565);
+            return new BitmapDrawable(bg);
         } else {
             // Get candidates picture.
             return new BitmapDrawable(rep_list.get(column).profile_picture.getBitmap());
