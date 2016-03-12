@@ -21,5 +21,11 @@ The UI mocks were done on Figma. You can find them [here] (https://www.figma.com
 <img src="screenshots/main_view.png" height="400" alt="Lancher screen on phone app"/>
 <img src="screenshots/congressional_view.png" height="400" alt="Congressional screen on phone app"/>
 <img src="screenshots/detailed_view.png" height="400" alt="Detailed screen on phone app"/>
+<img src="screenshots/detailed_view_bills.png" height="400" alt="Detailed screen on phone app with bills"/>
+<img src="screenshots/detailed_view_tweets.png" height="400" alt="Detailed screen on phone app with tweets"/>
 <img src="screenshots/watch_main_view.png" height="200" alt="Lancher screen on watch app"/>
 <img src="screenshots/vote_view.png" height="200" alt="Vote screen on watch app"/>
+
+## Acknowledgements
+Exandable List View [turorial] (http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/) was very helpful.
+I also used this [code] (http://stackoverflow.com/questions/11932805/cropping-circular-area-from-bitmap-in-android) for circular images from the square ones that twitter provided.

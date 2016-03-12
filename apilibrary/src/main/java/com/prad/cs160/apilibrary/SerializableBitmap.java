@@ -46,7 +46,6 @@ public class SerializableBitmap implements Serializable {
         }
         bitmap = getCircularBitmap(bitmap);
     }
-    // TODO(prad): Acknowledge: http://stackoverflow.com/questions/11932805/cropping-circular-area-from-bitmap-in-android
     public Bitmap getCircularBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Config.ARGB_8888);

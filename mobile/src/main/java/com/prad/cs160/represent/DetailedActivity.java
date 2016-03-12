@@ -55,7 +55,6 @@ public class DetailedActivity extends AppCompatActivity {
         // List View
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.details);
-        // TODO(prad): Acknowledge http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
         listAdapter = new DetailsAdapter(this, rep);
 
         // setting list adapter

@@ -236,10 +236,10 @@ public class LookupElectionInformation {
         public void run() {
             final UserTimeline userTimeline = new UserTimeline.Builder().screenName(
                     information.representatives.get(rep_location).twitter_handle).maxItemsPerRequest(3).build();
+            information.representatives.get(rep_location).latest_tweets = new ArrayList<>();
             Callback<TimelineResult<Tweet>> cb = new Callback<TimelineResult<Tweet>>() {
                 @Override
                 public void success(Result<TimelineResult<Tweet>> result) {
-                    information.representatives.get(rep_location).latest_tweets = new ArrayList<>();
                     for (Tweet t : result.data.items) {
                         final Gson gson = new Gson();
                         information.representatives.get(rep_location).latest_tweets.add(gson.toJson(result.data.items.get(0)));
