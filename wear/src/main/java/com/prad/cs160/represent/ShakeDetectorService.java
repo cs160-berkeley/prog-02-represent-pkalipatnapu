@@ -57,7 +57,7 @@ public class ShakeDetectorService extends Service implements SensorEventListener
             try {
                 // Now look up the data from a JSON file.
                 AssetManager mngr = getAssets();
-                InputStream stream = mngr.open("election-county-2012.json");
+                InputStream stream = mngr.open("us_postal_codes.json");
                 int size = stream.available();
                 byte[] buffer = new byte[size];
                 stream.read(buffer);
@@ -85,6 +85,7 @@ public class ShakeDetectorService extends Service implements SensorEventListener
         long elapsedTime = now - startTime;
         if (elapsedTime < MAX_SHAKE_DURATION) {
             // Still part of the same shake.
+            Log.v("ShakeDetectorService", "Still same shake");
             return false;
         }
         // Otherwise shake starts now.
@@ -95,6 +96,7 @@ public class ShakeDetectorService extends Service implements SensorEventListener
         if (maxLinearAcceleration > MIN_SHAKE_ACCELERATION) {
             // Keep track of all the movements
             moveCount++;
+            Log.d("ShakeDetectorService", "Move count increased: " + moveCount);
             // Check if enough movements have been made to qualify as a shake
             if (moveCount > MIN_MOVEMENTS) {
                 // Reset for the next one!

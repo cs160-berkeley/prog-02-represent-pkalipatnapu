@@ -80,9 +80,9 @@ public class Politicians extends FragmentGridPagerAdapter {
             for (int i=0; i< (2*padding + bg_size); i++) {
                 for (int j=0; j<(2*padding + bg_size); j++) {
                     if (j<vote.obama_percentage) {
-                        color[i*bg_size + j] = Color.BLUE;
+                        color[i*bg_size + j] = Color.parseColor("#2F80ED");
                     } else if(j<vote.obama_percentage+vote.romney_percentage) {
-                        color[i*bg_size + j] = Color.RED;
+                        color[i*bg_size + j] = Color.parseColor("#ED2F2F");
                     } else {
                         color[i*bg_size + j] = Color.GRAY;
                     }

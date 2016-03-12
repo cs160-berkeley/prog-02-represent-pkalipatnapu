@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.prad.cs160.apilibrary.Representative;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class DetailedActivity extends AppCompatActivity {
     public final static String REP_OBJECT = "com.prad.cs160.represent.REP_OBJECT";
 
@@ -28,6 +31,9 @@ public class DetailedActivity extends AppCompatActivity {
         LinearLayout banner = (LinearLayout) findViewById(R.id.banner);
         ImageView dp = (ImageView) findViewById(R.id.displaypic);
         TextView name = (TextView) findViewById(R.id.name);
+        TextView email = (TextView) findViewById(R.id.email);
+        TextView website = (TextView) findViewById(R.id.website);
+        TextView term = (TextView) findViewById(R.id.term);
 
         // Set Background color
         if (rep.party == Representative.Party.DEMOCRAT) banner.setBackgroundColor(Color.parseColor("#2F80ED"));
@@ -39,6 +45,12 @@ public class DetailedActivity extends AppCompatActivity {
 
         // Set rep name
         name.setText(rep.name);
+
+        // Set body details
+        email.setText(rep.email);
+        website.setText(rep.website);
+        DateFormat df = new SimpleDateFormat("MMM yyyy");
+        term.setText("Serving until " + df.format(rep.term_end));
 
         // List View
         // get the listview

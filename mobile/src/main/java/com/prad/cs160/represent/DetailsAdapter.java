@@ -107,7 +107,6 @@ public class DetailsAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         if (groupPosition == 2) {
             // In this case, the header is a tweet view.
-            // TODO(prad): What if there is no twitter account.
             Gson gson = new Gson();
             Tweet first_tweet = gson.fromJson(rep.latest_tweets.get(0), Tweet.class);
             CompactTweetView tweetView = new CompactTweetView(_context, first_tweet);
