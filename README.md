@@ -10,7 +10,7 @@ Pradeep Kalipatnapu ([prad@berkeley.edu](mailto:prad@berkeley.edu))
 
 ## Demo Video
 
-See [your demo video title here] (https://youtu.be/ZX8cORBiVHM)
+See [demo video here] (https://youtu.be/ZX8cORBiVHM)
 
 ## UI Mocks
 
