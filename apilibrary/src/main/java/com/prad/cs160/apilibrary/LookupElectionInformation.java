@@ -73,7 +73,7 @@ public class LookupElectionInformation {
             JSONObject legislator_json = legislators.getJSONObject(i);
             Representative legislator_obj = new Representative();
             legislator_obj.name = getName(legislator_json);
-            legislator_obj.is_democrat = getPartyIsDemocrat(legislator_json);
+            legislator_obj.party = getParty(legislator_json);
             legislator_obj.is_senator = getHouseIsSenate(legislator_json);
             legislator_obj.bioguide_id = legislator_json.getString("bioguide_id");
             legislator_obj.email = legislator_json.getString("oc_email");
@@ -139,7 +139,6 @@ public class LookupElectionInformation {
     }
 
     public VoteResult getPreviousElectionResults(int zip) {
-        // TODO(prad): What if there is no county?
         String url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zip;
         URLTask rep_task = new URLTask();
         rep_task.execute(url);
@@ -147,13 +146,14 @@ public class LookupElectionInformation {
         try {
             JSONArray reply = rep_task.get();
             JSONArray address_components = reply.getJSONObject(0).getJSONArray("address_components");
-            String county = "", state = "";
+            String county = null, state = null;
             for (int i = 0; i < address_components.length(); i++) {
                 JSONObject j = address_components.getJSONObject(i);
                 String type = j.getJSONArray("types").getString(0);
                 if (type.equals("administrative_area_level_2")) county = j.getString("long_name").split(" ", 2)[0]; // Drop the word "County"
                 if (type.equals("administrative_area_level_1")) state = j.getString("short_name");
             }
+            if (county == null) return null;
             // Now look up the data from a JSON file.
             InputStream stream = mngr.open("election-county-2012.json");
             int size = stream.available();
@@ -191,9 +191,10 @@ public class LookupElectionInformation {
 
     private List<String> convertJsontoBills(JSONArray json_committess) throws JSONException {
         List <String> bills = new ArrayList<>();
-        for (int i=0; i<json_committess.length() || i < 3; i++) {
+        for (int i=0; i<json_committess.length() && bills.size() < 3; i++) {
             JSONObject json_committee = json_committess.getJSONObject(i);
-            bills.add(json_committee.getString("short_title"));
+            if (json_committee.getString("short_title").equals("null")) bills.add(json_committee.getString("official_title"));
+            else bills.add(json_committee.getString("short_title"));
         }
         return bills;
     }
@@ -202,9 +203,10 @@ public class LookupElectionInformation {
         return legislator.get("first_name") + " " + legislator.get("last_name");
     }
 
-    private boolean getPartyIsDemocrat(JSONObject legislator) throws JSONException {
-        // TODO(prad): Independents?
-        return legislator.get("party").equals("D");
+    private Representative.Party getParty(JSONObject legislator) throws JSONException {
+        if (legislator.get("party").equals("D")) return Representative.Party.DEMOCRAT;
+        else if (legislator.get("party").equals("R")) return Representative.Party.REPUBLICAN;
+        else return Representative.Party.INDEPENDENT;
     }
 
     private boolean getHouseIsSenate(JSONObject legislator) throws JSONException {
@@ -234,15 +236,16 @@ public class LookupElectionInformation {
         }
         @Override
         public void run() {
-            Log.d("T", "Asking for tweet");
             final UserTimeline userTimeline = new UserTimeline.Builder().screenName(
-                    information.representatives.get(rep_location).twitter_handle).maxItemsPerRequest(1).build();
+                    information.representatives.get(rep_location).twitter_handle).maxItemsPerRequest(3).build();
             Callback<TimelineResult<Tweet>> cb = new Callback<TimelineResult<Tweet>>() {
                 @Override
                 public void success(Result<TimelineResult<Tweet>> result) {
-                    Log.d("T", "Got tweet" + result.data.items.get(0).text);
-                    final Gson gson = new Gson();
-                    information.representatives.get(rep_location).latest_tweet = gson.toJson(result.data.items.get(0));
+                    information.representatives.get(rep_location).latest_tweets = new ArrayList<>();
+                    for (Tweet t : result.data.items) {
+                        final Gson gson = new Gson();
+                        information.representatives.get(rep_location).latest_tweets.add(gson.toJson(result.data.items.get(0)));
+                    }
                     try {
                         URL url = new URL(getBigImageUrl(result.data.items.get(0).user.profileImageUrl));
                         information.representatives.get(rep_location).profile_picture = new SerializableBitmap(url);

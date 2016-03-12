@@ -76,8 +76,9 @@ public class CongressionalActivity extends AppCompatActivity {
         LLParams.setMargins(0, 8, 0, 8);
         rep_banner.setLayoutParams(LLParams);
         rep_banner.setGravity(Gravity.CENTER_VERTICAL);
-        if (rep.is_democrat) rep_banner.setBackgroundColor(Color.parseColor("#2F80ED"));
-        else rep_banner.setBackgroundColor(Color.parseColor("#ED2F2F"));
+        if (rep.party == Representative.Party.DEMOCRAT) rep_banner.setBackgroundColor(Color.parseColor("#2F80ED"));
+        else if (rep.party == Representative.Party.REPUBLICAN) rep_banner.setBackgroundColor(Color.parseColor("#ED2F2F"));
+        else rep_banner.setBackgroundColor(Color.GRAY);
         rep_banner.setOrientation(LinearLayout.HORIZONTAL);
         rep_banner.setElevation(8);
 

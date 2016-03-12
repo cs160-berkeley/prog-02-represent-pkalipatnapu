@@ -47,6 +47,10 @@ public class PhoneToWatchService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
+        if (intent == null) {
+            Log.d("T", "Intent was null");
+            return START_STICKY;
+        }
         Bundle extras = intent.getExtras();
         final ElectionInformation info = (ElectionInformation) extras.getSerializable(INFO);
 

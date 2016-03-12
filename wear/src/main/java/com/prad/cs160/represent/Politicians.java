@@ -53,17 +53,16 @@ public class Politicians extends FragmentGridPagerAdapter {
     public Fragment getFragment(int row, int col) {
         ClickableCardFragment fragment = new ClickableCardFragment();
         // Last column gets vote view.
-        if (col == getColumnCount(1)-1) {
-
+        if (vote != null && col == getColumnCount(1)-1) {
             double dem_percentage = vote.obama_percentage;
             double rep_percentage = vote.romney_percentage;
             fragment.setTitle("2012 Vote");
             fragment.setDescription("\tDemocrat: " + dem_percentage + "%\n\tRepublican: " + rep_percentage + "%");
         } else {
             fragment.setTitle(rep_list.get(col).name);
-            if (rep_list.get(col).is_democrat) {
+            if (rep_list.get(col).party == Representative.Party.DEMOCRAT) {
                 fragment.setIcon(R.drawable.demlogo);
-            } else {
+            } else if (rep_list.get(col).party == Representative.Party.REPUBLICAN) {
                 fragment.setIcon(R.drawable.replogo);
             }
             fragment.setOnClickListener(new OnFragmentClick(rep_list.get(col)));
@@ -74,7 +73,7 @@ public class Politicians extends FragmentGridPagerAdapter {
     // Obtain the background image for the specific page
     @Override
     public Drawable getBackgroundForPage(int row, int column) {
-        if (column == getColumnCount(1)-1) {
+        if (vote != null && column == getColumnCount(1)-1) {
             int bg_size = 100;
             // TODO(prad): Some of these pixels seem to be outside the screen.
             int[] color = new int[bg_size*bg_size];
@@ -106,6 +105,7 @@ public class Politicians extends FragmentGridPagerAdapter {
     // Obtain the number of pages (horizontal)
     @Override
     public int getColumnCount(int rowNum) {
-        return rep_list.size() + 1;
+        if (vote != null) return rep_list.size() + 1;
+        else return rep_list.size();
     }
 };

@@ -22,6 +22,7 @@ import java.net.URL;
  * Created by eviltwin on 3/9/16.
  */
 public class SerializableBitmap implements Serializable {
+    private static final long serialVersionUID = -5228835919664263905L;
     private Bitmap bitmap;
 
     public SerializableBitmap(URL url) {
