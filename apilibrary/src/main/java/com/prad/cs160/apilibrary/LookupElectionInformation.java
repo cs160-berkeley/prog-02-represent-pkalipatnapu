@@ -80,7 +80,6 @@ public class LookupElectionInformation {
             legislator_obj.website = legislator_json.getString("website");
             legislator_obj.twitter_handle = legislator_json.getString("twitter_id");
             legislator_obj.term_end = getTermEnd(legislator_json);
-            // TODO(prad): Get bills and committees.
             result.add(legislator_obj);
         }
         return result;
@@ -98,7 +97,7 @@ public class LookupElectionInformation {
         try {
             information.representatives = convertJsontoRepresentatives(rep_task.get());
         } catch (Exception e) {
-            Log.d("T", "Exception with Async Task. " + e.toString());
+            Log.d("LookupElectionInfo", "Exception with Async Task. " + e.toString());
         }
         // Lookup bills and committees.
         for (Representative r : information.getRepresentatives()) {
@@ -108,7 +107,7 @@ public class LookupElectionInformation {
             try {
                 r.committees = convertJsontoCommittes(committee_task.get());
             } catch (Exception e) {
-                Log.d("T", "Exception with Async Task. " + e.toString());
+                Log.d("LookupElectionInfo", "Exception with Async Task. " + e.toString());
             }
             url = "http://congress.api.sunlightfoundation.com/bills?sponsor_id=" + r.bioguide_id + "&apikey=" + sunlight_API_KEY;
             URLTask bill_task = new URLTask();
@@ -116,13 +115,12 @@ public class LookupElectionInformation {
             try {
                 r.bills = convertJsontoBills(bill_task.get());
             } catch (Exception e) {
-                Log.d("T", "Exception with Async Task. " + e.toString());
+                Log.d("LookupElectionInfo", "Exception with Async Task. " + e.toString());
             }
         }
         loadTwitterData(baseContext);
         // Get previous election results.
         information.previous_election = getPreviousElectionResults(zip);
-        Log.d("T", "Vote Result. " + information.previous_election.obama_percentage);
     }
 
     public void loadTwitterData(Context baseContext) {
@@ -172,7 +170,7 @@ public class LookupElectionInformation {
             }
 
         } catch (Exception e) {
-            Log.d("T", "Exception with Async Task. " + e.toString());
+            Log.d("LookupElectionInfo", "Exception with Async Task. " + e.toString());
         }
         return result;
     }
@@ -250,7 +248,7 @@ public class LookupElectionInformation {
                         URL url = new URL(getBigImageUrl(result.data.items.get(0).user.profileImageUrl));
                         information.representatives.get(rep_location).profile_picture = new SerializableBitmap(url);
                     } catch (Exception e) {
-                        Log.d("T", "Could not load profile picture: " + e.toString());
+                        Log.d("LookupElectionInfo", "Could not load profile picture: " + e.toString());
                     }
                     synchronized (twitter_data_lock) {
                         twitter_data_received++;
@@ -262,7 +260,7 @@ public class LookupElectionInformation {
 
                 @Override
                 public void failure(TwitterException exception) {
-                    Log.d("TwitterKit", "Load Tweet failure", exception);
+                    Log.d("LookupElectionInfo", "Load Tweet failure", exception);
                     synchronized (twitter_data_lock) {
                         twitter_data_received++;
                         if (twitter_data_received == information.representatives.size()) {

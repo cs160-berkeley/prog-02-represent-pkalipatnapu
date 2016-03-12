@@ -42,7 +42,6 @@ public class DetailsAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         String childText = "";
-        // TODO(prad): Edge cases for not enough information.
         if (groupPosition == 2) {
             // Tweet.
             Gson gson = new Gson();
@@ -68,7 +67,7 @@ public class DetailsAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        // Each item has 3 children.
+        // Each item has at most 3 children.
         int items = 0;
         if (groupPosition == 0) {
             items = rep.bills.size();

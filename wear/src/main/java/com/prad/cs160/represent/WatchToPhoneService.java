@@ -84,7 +84,7 @@ public class WatchToPhoneService extends Service {
 
     private void sendMessage( final String path, final Representative rep) {
         for (Node node : nodes) {
-            Log.d("T", "Sending message to phone with path: " + path + " and rep: " + rep.name);
+            Log.d("WatchToPhoneService", "Sending message to phone with path: " + path + " and rep: " + rep.name);
             //we find 'nodes', which are nearby bluetooth devices (aka emulators)
             //send a message for each of these nodes (just one, for an emulator)
             MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
@@ -96,7 +96,7 @@ public class WatchToPhoneService extends Service {
 
     private void sendMessage( final String path, final String text) {
         for(Node node : nodes) {
-            Log.d("T", "Sending message to phone with path: " + path + " and text: " + text);
+            Log.d("WatchToPhoneService", "Sending message to phone with path: " + path + " and text: " + text);
             //we find 'nodes', which are nearby bluetooth devices (aka emulators)
             //send a message for each of these nodes (just one, for an emulator)
             MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(

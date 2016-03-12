@@ -14,7 +14,7 @@ public class WatchListenerService extends WearableListenerService {
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        Log.d("T", "in WatchListenerService, got: " + messageEvent.getPath());
+        Log.d("WatchListenerService", "in WatchListenerService, got: " + messageEvent.getPath());
         //use the 'path' field in sendmessage to differentiate use cases
         if(messageEvent.getPath().equalsIgnoreCase(INFO)) {
             ElectionInformation info = ElectionInformation.deserialize(messageEvent.getData());

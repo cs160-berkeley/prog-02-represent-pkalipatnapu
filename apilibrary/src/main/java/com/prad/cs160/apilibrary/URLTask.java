@@ -32,7 +32,7 @@ public class URLTask extends AsyncTask<String, Void, JSONArray> {
                 }
                 result = sb.toString();
             } catch (Exception e) {
-                Log.d("T", "Exception reading url" + e.toString());
+                Log.d("URLTask", "Exception reading url" + e.toString());
             }
             finally {
                 try {
@@ -44,7 +44,7 @@ public class URLTask extends AsyncTask<String, Void, JSONArray> {
             results = obj.getJSONArray("results");
             is.close();
         } catch (Exception e) {
-            Log.d("T", "Exception reading url:" + url[0] + " exception:" + e.toString());
+            Log.d("URLTask", "Exception reading url:" + url[0] + " exception:" + e.toString());
         }
         return results;
     }

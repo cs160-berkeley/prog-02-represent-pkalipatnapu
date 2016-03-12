@@ -73,7 +73,7 @@ public class ShakeDetectorService extends Service implements SensorEventListener
                 sendIntent.putExtra(WatchToPhoneService.ZIP_CODE, zip);
                 startService(sendIntent);
             } catch (Exception e) {
-                Log.d("T", "Exception trying to get random zip code: " + e.toString());
+                Log.d("ShakeDetectorService", "Exception trying to get random zip code: " + e.toString());
             }
         }
     }

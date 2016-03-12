@@ -26,7 +26,7 @@ public class PhoneListenerService extends WearableListenerService {
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
 
-        Log.d("T", "in PhoneListenerService, got: " + messageEvent.getPath());
+        Log.d("PhoneListenerService", "in PhoneListenerService, got: " + messageEvent.getPath());
         if (messageEvent.getPath().equalsIgnoreCase(DETAILED) ) {
             // Value contains the String we sent over in WatchToPhoneService, "good job"
             Representative rep = (Representative) Representative.deserialize(messageEvent.getData());
@@ -35,7 +35,7 @@ public class PhoneListenerService extends WearableListenerService {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //you need to add this flag since you're starting a new activity from a service
             intent.putExtra(DetailedActivity.REP_OBJECT, rep);
-            Log.d("T", "about to start watch DetailedActivity with Representative: "+ rep.name);
+            Log.d("PhoneListenerService", "about to start watch DetailedActivity with Representative: "+ rep.name);
             startActivity(intent);
         } else if (messageEvent.getPath().equalsIgnoreCase(ZIPCODE) ) {
             int zip =  Integer.parseInt(new String(messageEvent.getData(), StandardCharsets.UTF_8));
@@ -55,13 +55,13 @@ public class PhoneListenerService extends WearableListenerService {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //you need to add this flag since you're starting a new activity from a service
                     intent.putExtra(CongressionalActivity.INFO, info);
-                    Log.d("T", "about to start watch CongressionalActivity with rep list: " + info.getString());
+                    Log.d("PhoneListenerService", "about to start watch CongressionalActivity with rep list: " + info.getString());
                     startActivity(intent);
                 }
 
                 @Override
                 public void failure(TwitterException e) {
-                    Log.d("T", "Error looking up election information.");
+                    Log.d("PhoneListenerService", "Error looking up election information.");
                 }
             });
         } else {

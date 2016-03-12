@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int zip = Integer.parseInt(zipcode.getText().toString());
         String admin_level_1, admin_level_2;
 
-        Log.d("T", "Received Zip Code: " + zip);
+        Log.d("MapsActivity", "Received Zip Code: " + zip);
         lei = new LookupElectionInformation(zip, getBaseContext());
 
         lei.getInfo(new Callback<ElectionInformation>() {
@@ -74,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
                 sendIntent.putExtra(PhoneToWatchService.INFO, info);
+                Log.d("MapsActivity", "Starting phone to watch service with the following intent: " + sendIntent.toString());
                 startService(sendIntent);
 
                 Intent intent = new Intent(getBaseContext(), CongressionalActivity.class);
@@ -83,7 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void failure(TwitterException e) {
-                Log.d("T", "Error looking up election information.");
+                Log.d("MapsActivity", "Error looking up election information.");
                 finish();
             }
         });
@@ -114,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Direct to berkeley by default.
         LatLng latLng = new LatLng(37.87, -122.27);
         if (bestLocation != null) {
-            Log.d("T", "Using GPS location");
+            Log.d("MapsActivity", "Using GPS location");
             latLng = new LatLng(bestLocation.getLatitude(), bestLocation.getLongitude());
         }
 
@@ -141,7 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             zipcode.setText(addresses.get(0).getPostalCode());
         } catch (Exception e) {
             // Do nothing.
-            Log.d("T", e.toString());
+            Log.d("MapsActivity", e.toString());
         }
     }
 

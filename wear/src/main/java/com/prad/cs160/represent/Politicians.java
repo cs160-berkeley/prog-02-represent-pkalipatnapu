@@ -75,10 +75,10 @@ public class Politicians extends FragmentGridPagerAdapter {
     public Drawable getBackgroundForPage(int row, int column) {
         if (vote != null && column == getColumnCount(1)-1) {
             int bg_size = 100;
-            // TODO(prad): Some of these pixels seem to be outside the screen.
-            int[] color = new int[bg_size*bg_size];
-            for (int i=0; i<bg_size; i++) {
-                for (int j=0; j<bg_size; j++) {
+            int padding = 10;
+            int[] color = new int[(bg_size+2*padding)*(2*padding+bg_size)];
+            for (int i=0; i< (2*padding + bg_size); i++) {
+                for (int j=0; j<(2*padding + bg_size); j++) {
                     if (j<vote.obama_percentage) {
                         color[i*bg_size + j] = Color.BLUE;
                     } else if(j<vote.obama_percentage+vote.romney_percentage) {

@@ -48,7 +48,7 @@ public class PhoneToWatchService extends Service {
         // Which cat do we want to feed? Grab this info from INTENT
         // which was passed over when we called startService
         if (intent == null) {
-            Log.d("T", "Intent was null");
+            Log.d("PhoneToWatchService", "Intent was null");
             return START_STICKY;
         }
         Bundle extras = intent.getExtras();
@@ -81,7 +81,7 @@ public class PhoneToWatchService extends Service {
             public void run() {
                 NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(mApiClient).await();
                 for(Node node : nodes.getNodes()) {
-                    Log.d("T", "Sending message to watch with rep list: " + reps.getString());
+                    Log.d("PhoneToWatchService", "Sending message to watch with rep list: " + reps.getString());
                     //we find 'nodes', which are nearby bluetooth devices (aka emulators)
                     //send a message for each of these nodes (just one, for an emulator)
                     MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(

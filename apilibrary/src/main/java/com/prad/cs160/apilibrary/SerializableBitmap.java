@@ -32,7 +32,7 @@ public class SerializableBitmap implements Serializable {
                     Bitmap image = BitmapFactory.decodeStream(url[0].openConnection().getInputStream());
                     return image;
                     } catch (Exception e) {
-                        Log.d("T", "Exception fetching image: " + e.toString());
+                        Log.d("SerializableBitmap", "Exception fetching image: " + e.toString());
                     }
                 return null;
             }
@@ -42,7 +42,7 @@ public class SerializableBitmap implements Serializable {
         try {
             bitmap = task.get();
         } catch (Exception e) {
-            Log.d("T", "Exception fetching image: " + e.toString());
+            Log.d("SerializableBitmap", "Exception fetching image: " + e.toString());
         }
         bitmap = getCircularBitmap(bitmap);
     }
